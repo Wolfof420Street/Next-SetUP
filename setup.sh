@@ -33,11 +33,17 @@ if [ -d "$NEXT_APP_DIR" ]; then
     git pull
 else
     echo "Cloning repository..."
-    mkdir ~/.ssh
-    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAuXxTwYtYRHFd5+EuxIqaoaSrXKUr4JH6nHf0iu/lup billodida420@gmail.com" > ~/.ssh/id_rsa
-    chmod 600 ~/.ssh/id_rsa
+    mkdir -p ~/.ssh
+    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE7/3PWrQ21afYBC0jcgGJZM5FtgC0J9hFhR0zyHvN+G billodida420@gmail.com" > ~/.ssh/id_ed25519
+    chmod 600 ~/.ssh/id_ed25519
     ssh-keyscan github.com >> ~/.ssh/known_hosts
-    git clone $GITHUB_REPO_URL $NEXT_APP_DIR
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_ed25519
+
+    if ! git clone $GITHUB_REPO_URL $NEXT_APP_DIR; then
+        echo "Failed to clone repository"
+        exit 1
+    fi
 fi
 
 cd $NEXT_APP_DIR
