@@ -34,17 +34,18 @@ if [ -d "$NEXT_APP_DIR" ]; then
 else
     echo "Cloning repository..."
     mkdir -p ~/.ssh
-    echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE7/3PWrQ21afYBC0jcgGJZM5FtgC0J9hFhR0zyHvN+G billodida420@gmail.com" > ~/.ssh/id_ed25519
-    chmod 600 ~/.ssh/id_ed25519
+    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDDrGfC+gjSmvbC1EtEVjIcuhtX/x87FHkpara4s0NXvapP3UnSccIr23vZx73oXNDxYCReiEtnpKaqsMlglUIP0oMfSPZ8xazJLNRjIHyWeJtLIKRA/IBDqfHGX9Ktz52Xk/1zdjUbJe8qv9fAB+hzaVjiq6yL8to4oDE53NynkRY+pd4NA5YYDW5gnKBUCfBUMGSOz/pq9DbufLYHZ8O8ADHzWqa+L80IB3nCdTkj7URcMaxUjlldkywgAUUkKSXOkxRyyv50S0qttSQlha6ZS6ReRXmbcmTiKaEWB5Od9AgsQ1NitjPNkN3G9UoA/zu0pxSEsNAUMdB+FGRVDzcb/GERmOsVplHIO2LnaNN4Fs8AcP1F4/qqpb2qzr0BC67+x0d5MybA9gn155CGvNZJW4xMZrSyXnOtwCJG6U0gnyZeQhKNjNhwYvJxrbeYmDRZpgTJrtmnTvc0JZqYN4ny1yK1mYWYC40rKlA13X7IloF/G4wpfjBycFAoW5eqWQPPXDYMM9W5HdCgz3vPkJn4DWM93+psG3Y54sDi9K9gGUtjLAWFsx5NT6KGq2OPVDwPf2aWRtGIMq6k0yLe8x77uoXp7FqV3ABqZ8dmlzrIrX9UK+6gOv+D2+PIRp5ZFpmy+VybtJZzeZqj28dwRXC/iHsk3x6dLYuKhRO5mIFKvw== billodida420@gmail.com" > ~/.ssh/id_rsa
+    chmod 600 ~/.ssh/id_rsa
     ssh-keyscan github.com >> ~/.ssh/known_hosts
     eval "$(ssh-agent -s)"
-    ssh-add ~/.ssh/id_ed25519
+    ssh-add ~/.ssh/id_rsa
 
     if ! git clone $GITHUB_REPO_URL $NEXT_APP_DIR; then
         echo "Failed to clone repository"
         exit 1
     fi
 fi
+
 
 cd $NEXT_APP_DIR
 
